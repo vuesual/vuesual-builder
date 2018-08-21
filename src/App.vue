@@ -1,15 +1,18 @@
 <template>
   <div id="app">
-    
+    <component v-for="(element, index) in elements" :is="element" :key=index></component>
   </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import Vue, { Component } from 'vue';
 import Button from '@/components/Button.vue';
 import Title from '@/components/Title.vue';
 import VuesualComponent from '@/typings/structure';
-import { toElementsArray } from '@/services/structureConverter';
+import {
+  toElementComponent,
+  ImportComponentFunction,
+} from '@/services/structureConverter';
 
 export default Vue.extend({
   name: 'app',
@@ -19,8 +22,8 @@ export default Vue.extend({
     };
   },
   computed: {
-    elements(): string[] {
-      return toElementsArray(this.structure);
+    elements(): ImportComponentFunction[] {
+      return this.structure.map(item => toElementComponent(item));
     },
   },
 });
