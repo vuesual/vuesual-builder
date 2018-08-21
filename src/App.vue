@@ -1,18 +1,27 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+    
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import HelloWorld from './components/HelloWorld.vue';
+import Button from '@/components/Button.vue';
+import Title from '@/components/Title.vue';
+import VuesualComponent from '@/typings/structure';
+import { toElementsArray } from '@/services/structureConverter';
 
 export default Vue.extend({
   name: 'app',
-  components: {
-    HelloWorld,
+  data() {
+    return {
+      structure: require('@/assets/structure.json') as VuesualComponent[],
+    };
+  },
+  computed: {
+    elements(): string[] {
+      return toElementsArray(this.structure);
+    },
   },
 });
 </script>
