@@ -10,5 +10,11 @@
       "config": {},
       "children": {}
     }
+  },
+  {
+    "NonExistent": {
+      "config": {},
+      "children": {}
+    }
   }
 ]
