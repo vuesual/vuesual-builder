@@ -1,6 +1,9 @@
 <template>
   <div id="app">
-    <component v-for="(element, index) in elements" :is="element" :key=index></component>
+    <component v-for="(element, index) in elements"
+               :is="element"
+               :key=index
+               :name="elementNames[index]"></component>
   </div>
 </template>
 
@@ -22,6 +25,9 @@ export default Vue.extend({
     };
   },
   computed: {
+    elementNames(): string[] {
+      return this.structure.map(item => Object.keys(item)[0]);
+    },
     elements(): ImportComponentFunction[] {
       return this.structure.map(item => toElementComponent(item));
     },
