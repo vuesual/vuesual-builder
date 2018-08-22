@@ -1,19 +1,13 @@
 <template>
   <div id="app">
-    <component v-for="(element, index) in elements"
-               :is="element"
-               :key="elementNames[index]"
-               :name="elementNames[index]"></component>
+    <render-component :structure="structure"></render-component>
   </div>
 </template>
 
 <script lang="ts">
-import Vue, { Component } from 'vue';
+import Vue from 'vue';
+import RenderComponent from '@/render/RenderComponent.vue';
 import VuesualComponent from '@/typings/structure';
-import {
-  toElementComponent,
-  ImportComponentFunction,
-} from '@/services/structureConverter';
 
 export default Vue.extend({
   name: 'app',
@@ -22,14 +16,9 @@ export default Vue.extend({
       structure: require('@/assets/structure.json') as VuesualComponent[],
     };
   },
-  computed: {
-    elementNames(): string[] {
-      return this.structure.map(item => Object.keys(item)[0]);
-    },
-    elements(): ImportComponentFunction[] {
-      return this.structure.map(item => toElementComponent(item));
-    },
-  },
+  components: {
+    RenderComponent,
+  }
 });
 </script>
 
