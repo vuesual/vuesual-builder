@@ -1,18 +1,34 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+    <component v-for="(element, index) in elements"
+               :is="element"
+               :key="elementNames[index]"
+               :name="elementNames[index]"></component>
   </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import HelloWorld from './components/HelloWorld.vue';
+import Vue, { Component } from 'vue';
+import VuesualComponent from '@/typings/structure';
+import {
+  toElementComponent,
+  ImportComponentFunction,
+} from '@/services/structureConverter';
 
 export default Vue.extend({
   name: 'app',
-  components: {
-    HelloWorld,
+  data() {
+    return {
+      structure: require('@/assets/structure.json') as VuesualComponent[],
+    };
+  },
+  computed: {
+    elementNames(): string[] {
+      return this.structure.map(item => Object.keys(item)[0]);
+    },
+    elements(): ImportComponentFunction[] {
+      return this.structure.map(item => toElementComponent(item));
+    },
   },
 });
 </script>
