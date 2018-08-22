@@ -1,4 +1,4 @@
-# vuesual-builder
+# Visual UI builder for Vue applications
 
 ## Project setup
 ```
