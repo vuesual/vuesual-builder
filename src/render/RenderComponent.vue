@@ -22,18 +22,24 @@ export default Vue.extend({
   props: {
     structure: {
       required: true,
-      type: Array
-    }
+      type: Array as () => VuesualComponent[],
+    },
   },
   computed: {
     elementNames(): string[] {
-      return (this as any).structure.map((item: VuesualComponent) => Object.keys(item)[0]);
+      return this.structure.map(
+        (item: VuesualComponent) => Object.keys(item)[0],
+      );
     },
-    elementChildren(): Object[] {
-      return (this as any).structure.map((item: VuesualComponent) => item[Object.keys(item)[0]]['children']);
+    elementChildren(): VuesualComponent[] {
+      return this.structure.map(
+        (item: VuesualComponent) => item[Object.keys(item)[0]]['children'],
+      );
     },
     elements(): ImportComponentFunction[] {
-      return (this as any).structure.map((item: VuesualComponent) => toElementComponent(item));
+      return this.structure.map((item: VuesualComponent) =>
+        toElementComponent(item),
+      );
     },
   },
 });
