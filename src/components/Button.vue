@@ -8,6 +8,7 @@
 import Vue from 'vue';
 export default Vue.extend({
   name: 'Button',
+  props: ['structure'],
 });
 </script>
 
