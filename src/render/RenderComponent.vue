@@ -25,7 +25,7 @@ export default Vue.extend({
   },
   computed: {
     // todo: make it as one type
-    elements(): { component: ImportComponentFunction, key: string }[] {
+    elements(): Array<{ component: ImportComponentFunction; key: string }> {
       return this.structure.map((item: VuesualComponent) =>
         toElementComponent(item),
       );

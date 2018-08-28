@@ -17,38 +17,40 @@ interface AsyncComponent {
 export type ImportComponentFunction = () => AsyncComponent;
 
 // to-do: add proper typings
-const mixConfiguration = function (component: any, configuartion: any): Component {
+const mixConfiguration = (component: any, configuration: any): Component => {
   // to-do make it less retarded
-  let configProp = {
+  const configProp = {
     config: {
-      default: configuartion
-    }
-  }
-  component.default.options.props = {...component.default.options.props, ...configProp}
-  return component
-}
+      default: configuration,
+    },
+  };
+  component.default.options.props = {
+    ...component.default.options.props,
+    ...configProp,
+  };
+  return component;
+};
 
-const buildConfiguarbleComponent = async (
-  vuesualComponent: VuesualComponent
+const buildConfigurableComponent = async (
+  vuesualComponent: VuesualComponent,
 ): Promise<Component> => {
   return new Promise((resolve, reject) => {
-    import(`@/components/${vuesualComponent.key}.vue`)
-      .then(component => {
-        mixConfiguration(component, vuesualComponent.config)
-        resolve(component)
-      })
-  })
+    import(`@/components/${vuesualComponent.key}.vue`).then(component => {
+      mixConfiguration(component, vuesualComponent.config);
+      resolve(component);
+    });
+  });
 };
 
 export const toElementComponent = (
   structure: VuesualComponent,
-): { component: ImportComponentFunction, key: string } => {
-  return { 
+): { component: ImportComponentFunction; key: string } => {
+  return {
     component: () => ({
-    component: buildConfiguarbleComponent(structure),
-    error: Error,
-    timeout: 200,
-  }),
-  key: structure.key
-}
+      component: buildConfigurableComponent(structure),
+      error: Error,
+      timeout: 200,
+    }),
+    key: structure.key,
+  };
 };

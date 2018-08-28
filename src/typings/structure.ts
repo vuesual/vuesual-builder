@@ -1,5 +1,5 @@
 export default interface VuesualComponent {
-    key: string,
-    config: {};
-    children: {};
+  key: string;
+  config: {};
+  children: {};
 }
