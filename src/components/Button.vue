@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button>Test button</button>
+    <button>{{ config }}</button>
   </div>
 </template>
 
@@ -8,7 +8,14 @@
 import Vue from 'vue';
 export default Vue.extend({
   name: 'Button',
-  props: ['structure'],
+  props: {
+    childStructure: {
+      type: Object
+    },
+    config: {
+      type: Object
+    }
+  }
 });
 </script>
 

@@ -1,10 +1,8 @@
 <template>
   <div>
-    <component v-for="(element, index) in elements"
-               :is="element"
-               :key="elementNames[index]"
-               :name="elementNames[index]"
-               :structure="elementChildren[index]"
+    <component v-for="element in elements"
+               :is="element.component"
+               :key="element.key"
                ></component>
   </div>
 </template>
@@ -26,17 +24,8 @@ export default Vue.extend({
     },
   },
   computed: {
-    elementNames(): string[] {
-      return this.structure.map(
-        (item: VuesualComponent) => Object.keys(item)[0],
-      );
-    },
-    elementChildren(): VuesualComponent[] {
-      return this.structure.map(
-        (item: VuesualComponent) => item[Object.keys(item)[0]]['children'],
-      );
-    },
-    elements(): ImportComponentFunction[] {
+    // todo: make it as one type
+    elements(): Array<{ component: ImportComponentFunction; key: string }> {
       return this.structure.map((item: VuesualComponent) =>
         toElementComponent(item),
       );
